@@ -88,14 +88,8 @@ game level from the menu above'''
         prev_dim = self.dim                         #get previous dimension
         two_dim = self.createEqualDimensionalArray(type, m , n)
         self.removeWidgets(prev_dim)
-        if prev_dim[0] > self.dim[0]:                       #use current dimension to keep things within range
-            m,n = self.dim
-            self.row = random.randint(0, m - 1)
-            self.col = random.randint(0, n - 1)
-        else:
-            m,n = prev_dim
-            self.row = random.randint(0, m)
-            self.col = random.randint(0, n)
+        self.row = random.randint(0, m - 1)
+        self.col = random.randint(0, n - 1)
         self.puzzleBoard(two_dim)
         
     def removeWidgets(self, prev_dim):
@@ -118,7 +112,7 @@ game level from the menu above'''
                 index += 1
             self.two_d_list.append(arr)
         
-        random.shuffle(self.two_d_list)
+        random.shuffle(self.two_d_list)         #shuffle array
         return self.two_d_list
     def updateMove(self):
         r,c = self.dim
@@ -195,19 +189,7 @@ game level from the menu above'''
 
     def onMiddleClick(self, event, pos):
         self.puzzleMove(pos)
-    def onUpKeyPress(self, event):
-        pos = (self.row + 1, self.col)      #move widget one point up
-        self.puzzleMove(pos)
-    def onDownKeyPress(self, event):
-        pos = (self.row - 1, self.col)      #move widget one point down
-        self.puzzleMove(pos)
-    def onLeftKeyPress(self, event):
-        pos = (self.row, self.col - 1)      #move widget one point right
-        self.puzzleMove(pos)
-    def onRightKeyPress(self, event):
-        pos = (self.row, self.col + 1)      #move widget one point left
-        self.puzzleMove(pos)
-    def puzzleBoard(self, wordLetters):
+    def puzzleBoard(self, letters):
         r,c = self.dim
         for m in range(0, r):
             arr = []
@@ -219,7 +201,7 @@ game level from the menu above'''
                     pieces.config(disabled='red', relief='sunken',bd=2, bg='red') #empty cell for moving cells
                 else:
                      pieces = Button(self.board, 
-                                text=wordLetters[m][n])
+                                text=letters[m][n])
                      pieces.config(relief='raised', 
                               font=('verdana',35,'bold'),bd=6, bg='red', fg='white' )
                      pos = (m,n)
